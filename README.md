@@ -2,9 +2,9 @@
 
 <p align="center">
   <a href="http://developer.android.com/index.html"><img alt="Android" src="https://img.shields.io/badge/platform-android-green.svg"/></a>
-  <a href="https://jitpack.io/#philipk99/pin-lock-compose"><img alt="Version" src="https://jitpack.io/v/raheemadamboev/pin-lock-compose.svg"/></a>
+  <a href="https://jitpack.io/#philipk99/pin-lock-compose"><img alt="Version" src="https://jitpack.io/v/philipk99/pin-lock-compose.svg"/></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://android-arsenal.com/api?level=26"><img alt="API" src="https://img.shields.io/badge/API-26%2B-brightgreen.svg?style=flat"/></a>
 </p>
 
 <p align="center">
@@ -91,12 +91,16 @@ Use this only if there is already saved pin. If there is no saved pin, use simpl
 
 To check if saved pin exists:
 ```kotlin
-val pinExists = PinManager.pinExists()
+val pinExists = PinManager.pinExists().collectAsState(false)
 ```
 
 To clear saved pin so user can create brand new pin:
 ```kotlin
-PinManager.clearPin()
+val coroutineScope = rememberCoroutineScope()
+
+coroutineScope.launch {
+    PinManager.clearPin()
+}
 ```
 
 # Features
@@ -124,7 +128,7 @@ You can install and try demo app. All the features are implemented in the demo f
 
 ```xml
 Designed and developed by raheemadamboev (Raheem) 2023.
-Alternated by philipk99 (Philip) 2025.
+Modified by philipk99 (Philip) 2025.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
