@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "xyz.teamgravity.pin_lock_compose"
+    namespace = "de.klophil.pin_lock_compose"
     compileSdk = libs.versions.sdk.compile.get().toInt()
 
     defaultConfig {
@@ -67,18 +67,21 @@ dependencies {
 
     // security
     implementation(libs.security)
+
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            register<MavenPublication>("release") {
-                from(components["release"])
-
-                groupId = "com.github.raheemadamboev"
-                artifactId = "pin-lock-compose"
-                version = "1.0.2"
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            register<MavenPublication>("release") {
+//                from(components["release"])
+//
+//                groupId = "com.github.raheemadamboev"
+//                artifactId = "pin-lock-compose"
+//                version = "1.0.2"
+//            }
+//        }
+//    }
+//}

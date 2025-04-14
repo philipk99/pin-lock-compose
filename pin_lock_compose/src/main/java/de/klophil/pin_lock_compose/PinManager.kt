@@ -1,4 +1,4 @@
-package xyz.teamgravity.pin_lock_compose
+package de.klophil.pin_lock_compose
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,7 +7,7 @@ import androidx.security.crypto.MasterKey
 
 object PinManager {
 
-    private const val NAME = "xyz.teamgravity.pin_lock_compose"
+    private const val NAME = "de.klophil.pin_lock_compose"
     private const val PIN_LOCK = "pin_lock"
 
     private var preferences: SharedPreferences? = null

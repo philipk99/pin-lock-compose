@@ -1,4 +1,4 @@
-package xyz.teamgravity.pin_lock_compose
+package de.klophil.pin_lock_compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.listSaver

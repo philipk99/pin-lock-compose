@@ -1,4 +1,4 @@
-package xyz.teamgravity.pin_lock_compose
+package de.klophil.pin_lock_compose
 
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath

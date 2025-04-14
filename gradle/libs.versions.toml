@@ -9,6 +9,7 @@ security = "1.1.0-alpha07"
 
 android = "8.9.1"
 kotlin = "2.1.20"
+datastore = "1.1.4"
 
 sdk-min = "21"
 sdk-compile = "35"
@@ -27,6 +28,7 @@ compose-activity = { group = "androidx.activity", name = "activity-compose", ver
 compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
 core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 security = { group = "androidx.security", name = "security-crypto", version.ref = "security" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 [plugins]
 

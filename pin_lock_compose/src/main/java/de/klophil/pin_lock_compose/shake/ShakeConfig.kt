@@ -1,4 +1,4 @@
-package xyz.teamgravity.pin_lock_compose.shake
+package de.klophil.pin_lock_compose.shake
 
 internal data class ShakeConfig(
     val iterations: Int,

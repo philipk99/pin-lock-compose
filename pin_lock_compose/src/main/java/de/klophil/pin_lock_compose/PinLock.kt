@@ -1,4 +1,4 @@
-package xyz.teamgravity.pin_lock_compose
+package de.klophil.pin_lock_compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,9 +33,9 @@ import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
-import xyz.teamgravity.pin_lock_compose.shake.ShakeController
-import xyz.teamgravity.pin_lock_compose.shake.rememberShakeController
-import xyz.teamgravity.pin_lock_compose.shake.shake
+import de.klophil.pin_lock_compose.shake.ShakeController
+import de.klophil.pin_lock_compose.shake.rememberShakeController
+import de.klophil.pin_lock_compose.shake.shake
 
 /**
  * Covers the whole screen and displays the PinLock. This composable makes the user enter pin if it already exists. If there is
@@ -102,7 +102,7 @@ fun PinLock(
  * Covers the whole screen and displays the PinLock. This composable first makes the user enter original pin. Once user successfully
  * authenticates with his pin, it prompts the user to create new pin. It replaces the old pin. This composable is meant to be used for
  * changing pin when there is already saved pin. Don't use this composable if there is no saved pin yet.
- * Use [xyz.teamgravity.pin_lock_compose.PinLock] instead for creating pin for the first time.
+ * Use [de.klophil.pin_lock_compose.PinLock] instead for creating pin for the first time.
  *
  * @param title
  * Container for title text. It passes the authenticated boolean, so you can decide what title to show. For authenticated value, it passes

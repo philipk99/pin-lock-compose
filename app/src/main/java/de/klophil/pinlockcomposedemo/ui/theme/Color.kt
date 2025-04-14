@@ -1,4 +1,4 @@
-package xyz.teamgravity.pinlockcomposedemo.ui.theme
+package de.klophil.pinlockcomposedemo.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,7 +1,7 @@
-package xyz.teamgravity.pinlockcomposedemo
+package de.klophil.pinlockcomposedemo
 
 import android.app.Application
-import xyz.teamgravity.pin_lock_compose.PinManager
+import de.klophil.pin_lock_compose.PinManager
 
 class App : Application() {
 

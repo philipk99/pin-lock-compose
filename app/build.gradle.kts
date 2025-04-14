@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "xyz.teamgravity.pinlockcomposedemo"
+    namespace = "de.klophil.pinlockcomposedemo"
     compileSdk = libs.versions.sdk.compile.get().toInt()
 
     defaultConfig {
-        applicationId = "xyz.teamgravity.pinlockcomposedemo"
+        applicationId = "de.klophil.pinlockcomposedemo"
         minSdk = libs.versions.sdk.min.get().toInt()
         targetSdk = libs.versions.sdk.target.get().toInt()
         versionCode = 1

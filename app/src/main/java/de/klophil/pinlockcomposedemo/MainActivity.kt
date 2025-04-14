@@ -1,4 +1,4 @@
-package xyz.teamgravity.pinlockcomposedemo
+package de.klophil.pinlockcomposedemo
 
 import android.os.Build
 import android.os.Bundle
@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import xyz.teamgravity.pin_lock_compose.ChangePinLock
-import xyz.teamgravity.pin_lock_compose.PinLock
-import xyz.teamgravity.pinlockcomposedemo.ui.theme.PinLockComposeDemoTheme
+import de.klophil.pin_lock_compose.ChangePinLock
+import de.klophil.pin_lock_compose.PinLock
+import de.klophil.pinlockcomposedemo.ui.theme.PinLockComposeDemoTheme
 
 class MainActivity : ComponentActivity() {
 
