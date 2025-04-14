@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="http://developer.android.com/index.html"><img alt="Android" src="https://img.shields.io/badge/platform-android-green.svg"/></a>
-  <a href="https://jitpack.io/#raheemadamboev/pin-lock-compose"><img alt="Version" src="https://jitpack.io/v/raheemadamboev/pin-lock-compose.svg"/></a>
+  <a href="https://jitpack.io/#philipk99/pin-lock-compose"><img alt="Version" src="https://jitpack.io/v/raheemadamboev/pin-lock-compose.svg"/></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
 </p>
@@ -26,7 +26,7 @@ dependencyResolutionManagement {
 
 Install the library to the project in desired module's `build.gradle.kts` file. Replace `<current_version>` with the actual version:
 ```kotlin
-implementation("com.github.raheemadamboev:pin-lock-compose:<current_version>")
+implementation("com.github.philipk99:pin-lock-compose:<current_version>")
 ```
 
 # Implementation
@@ -60,8 +60,8 @@ PinLock(
 If there is no saved pin yet, it promtps the user to create pin. If there is saved pin, it promts the user to enter its pin:
 
 <p align="center">
-  <img width="296" height="600" src="https://github.com/raheemadamboev/pin-lock-compose/blob/master/extra/banner_1.gif" />
-  <img width="296" height="600" src="https://github.com/raheemadamboev/pin-lock-compose/blob/master/extra/banner_2.gif" />
+  <img width="296" height="600" src="https://github.com/philipk99/pin-lock-compose/blob/master/extra/banner_1.gif" />
+  <img width="296" height="600" src="https://github.com/philipk99/pin-lock-compose/blob/master/extra/banner_2.gif" />
 </p>
 
 ---
@@ -84,7 +84,7 @@ ChangePinLock(
 Use this only if there is already saved pin. If there is no saved pin, use simple `PinLock` instead for creating pin for the first time. When using `ChangePinLock`, firstly it prompts the user to enter original pin. After user succesfully authenticates using his original pin, it prompts the user to creat a new pin:
 
 <p align="center">
-  <img width="296" height="600" src="https://github.com/raheemadamboev/pin-lock-compose/blob/master/extra/banner_3.gif" />
+  <img width="296" height="600" src="https://github.com/philipk99/pin-lock-compose/blob/master/extra/banner_3.gif" />
 </p>
 
 ---
@@ -113,25 +113,18 @@ PinManager.clearPin()
 
 You can install and try demo app. All the features are implemented in the demo from creating pin to changing pin.
 
-<a href="https://github.com/raheemadamboev/pin-lock-compose/blob/master/extra/app-debug.apk">Download demo</a>
+<a href="https://github.com/philipk99/pin-lock-compose/blob/master/extra/app-debug.apk">Download demo</a>
 
 <p align="center">
-  <img width="296" height="600" src="https://github.com/raheemadamboev/pin-lock-compose/blob/master/extra/screenshot_1.jpg" />
-  <img width="296" height="600" src="https://github.com/raheemadamboev/pin-lock-compose/blob/master/extra/screenshot_2.jpg" />
+  <img width="296" height="600" src="https://github.com/philipk99/pin-lock-compose/blob/master/extra/screenshot_1.jpg" />
+  <img width="296" height="600" src="https://github.com/philipk99/pin-lock-compose/blob/master/extra/screenshot_2.jpg" />
 </p>
-
-# Projects using this library
-
-**Notepad**: 100 000+ downloads. 
-
-<a href="https://play.google.com/store/apps/details?id=xyz.teamgravity.notepad">Google Play Store</a>
-
-<a href="https://github.com/raheemadamboev/notepad-app">Github</a>
 
 # Licence
 
 ```xml
 Designed and developed by raheemadamboev (Raheem) 2023.
+Alternated by philipk99 (Philip) 2025.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

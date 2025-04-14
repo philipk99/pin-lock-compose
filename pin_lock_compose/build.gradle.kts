@@ -74,16 +74,16 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            register<MavenPublication>("release") {
-//                from(components["release"])
-//
-//                groupId = "com.github.raheemadamboev"
-//                artifactId = "pin-lock-compose"
-//                version = "1.0.2"
-//            }
-//        }
-//    }
-//}
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.philipk99"
+                artifactId = "pin-lock-compose"
+                version = "2.0.0"
+            }
+        }
+    }
+}
