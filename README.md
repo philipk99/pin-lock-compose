@@ -91,12 +91,16 @@ Use this only if there is already saved pin. If there is no saved pin, use simpl
 
 To check if saved pin exists:
 ```kotlin
-val pinExists = PinManager.pinExists()
+val pinExists = PinManager.pinExists().collectAsState(false)
 ```
 
 To clear saved pin so user can create brand new pin:
 ```kotlin
-PinManager.clearPin()
+val coroutineScope = rememberCoroutineScope()
+
+coroutineScope.launch {
+    PinManager.clearPin()
+}
 ```
 
 # Features
