@@ -16,9 +16,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,6 +38,10 @@ import androidx.constraintlayout.compose.Dimension
 import de.klophil.pin_lock_compose.shake.ShakeController
 import de.klophil.pin_lock_compose.shake.rememberShakeController
 import de.klophil.pin_lock_compose.shake.shake
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 /**
  * Covers the whole screen and displays the PinLock. This composable makes the user enter pin if it already exists. If there is
@@ -61,13 +67,14 @@ fun PinLock(
     onPinIncorrect: () -> Unit,
     onPinCreated: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val controller = rememberShakeController()
     val numbers = rememberMutableStateListOf<Int>()
-    val pinExists = remember { PinManager.pinExists() }
+    val pinExists = PinManager.pinExists().collectAsState(false)
 
     BasePinLock(
         title = {
-            title(pinExists)
+            title(pinExists.value)
         },
         color = color,
         controller = controller,
@@ -76,19 +83,23 @@ fun PinLock(
             if (numbers.size < PinConst.PIN_LENGTH) numbers.add(number)
 
             if (numbers.size == PinConst.PIN_LENGTH) {
-                if (PinManager.pinExists()) {
-                    if (PinManager.checkPin(numbers)) {
-                        onPinCorrect()
-                        numbers.clear()
-                    } else {
-                        controller.incorrect()
-                        onPinIncorrect()
-                        numbers.clear()
+                if (pinExists.value) {
+                    coroutineScope.launch {
+                        if (PinManager.checkPin(numbers)) {
+                            onPinCorrect()
+                            numbers.clear()
+                        } else {
+                            controller.incorrect()
+                            onPinIncorrect()
+                            numbers.clear()
+                        }
                     }
                 } else {
-                    PinManager.savePin(numbers)
-                    onPinCreated()
-                    numbers.clear()
+                    coroutineScope.launch {
+                        PinManager.savePin(numbers)
+                        onPinCreated()
+                        numbers.clear()
+                    }
                 }
             }
         },
@@ -122,6 +133,7 @@ fun ChangePinLock(
     onPinIncorrect: () -> Unit,
     onPinChanged: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val controller = rememberShakeController()
     val numbers = rememberMutableStateListOf<Int>()
     var authenticated by rememberSaveable { mutableStateOf(false) }
@@ -138,17 +150,21 @@ fun ChangePinLock(
 
             if (numbers.size == PinConst.PIN_LENGTH) {
                 if (authenticated) {
-                    PinManager.savePin(numbers)
-                    onPinChanged()
-                    numbers.clear()
+                    coroutineScope.launch {
+                        PinManager.savePin(numbers)
+                        onPinChanged()
+                        numbers.clear()
+                    }
                 } else {
-                    if (PinManager.checkPin(numbers)) {
-                        numbers.clear()
-                        authenticated = true
-                    } else {
-                        controller.incorrect()
-                        onPinIncorrect()
-                        numbers.clear()
+                    coroutineScope.launch {
+                        if (PinManager.checkPin(numbers)) {
+                            numbers.clear()
+                            authenticated = true
+                        } else {
+                            controller.incorrect()
+                            onPinIncorrect()
+                            numbers.clear()
+                        }
                     }
                 }
             }
@@ -218,7 +234,7 @@ private fun BasePinLock(
                 }
         ) {
             PinIndicator(
-                filled = numbers.size > 0
+                filled = numbers.isNotEmpty()
             )
             PinIndicator(
                 filled = numbers.size > 1

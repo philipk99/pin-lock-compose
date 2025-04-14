@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.library)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.serialization)
     `maven-publish`
 }
 
@@ -70,6 +71,7 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 //afterEvaluate {

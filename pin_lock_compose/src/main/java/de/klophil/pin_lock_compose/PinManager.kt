@@ -1,49 +1,56 @@
 package de.klophil.pin_lock_compose
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 
 object PinManager {
 
-    private const val NAME = "de.klophil.pin_lock_compose"
-    private const val PIN_LOCK = "pin_lock"
+    private const val FILE_NAME = "pin_lock_preferences"
 
-    private var preferences: SharedPreferences? = null
+    private var dataStore: DataStore<PinPreferences>? = null
 
     /**
-     * Returns EncryptedSharedPreferences.
+     * Returns encrypted DataStore.
      *
      * @param context
      * Application context is preferred.
      *
      * @return EncryptedSharedPreferences.
      */
-    private fun initializePreferences(context: Context): SharedPreferences {
-        val key = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-
-        return EncryptedSharedPreferences.create(
-            context,
-            NAME,
-            key,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    private fun initializePreferences(application: Application): DataStore<PinPreferences> {
+        return DataStoreFactory.create(
+            serializer = PinPreferencesSerializer,
+            produceFile = { application.preferencesDataStoreFile(FILE_NAME) }
         )
     }
 
     /**
-     * Returns non null SharedPreferences.
+     * Returns non null DataStore.
+     *
+     * @param context
+     * Context.
      *
      * @return non null SharedPreferences.
      *
      * @throws IllegalStateException
      * If SharedPreferences is not initialized yet.
      */
-    private fun getPreferences(): SharedPreferences {
-        return preferences ?: throw IllegalStateException("Do you forget to call initialize() first?")
+    private fun getPreferences(): DataStore<PinPreferences> {
+        return dataStore ?: throw IllegalStateException("Do you forget to call initialize() first?")
     }
 
     /**
@@ -67,13 +74,17 @@ object PinManager {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * Saves the pin in encrypted SharedPreferences.
+     * Saves the pin in encrypted DataStore.
      *
      * @param pin
      * List of pin numbers.
      */
-    internal fun savePin(pin: List<Int>) {
-        getPreferences().edit().putString(PIN_LOCK, fromIntList(pin)).apply()
+    internal suspend fun savePin(pin: List<Int>) {
+        getPreferences().updateData {
+            PinPreferences(
+                pin = fromIntList(pin)
+            )
+        }
     }
 
     /**
@@ -84,9 +95,8 @@ object PinManager {
      * @param pin
      * List of pin numbers.
      */
-    internal fun checkPin(pin: List<Int>): Boolean {
-        if (!pinExists()) return false
-        val savedPin = getPreferences().getString(PIN_LOCK, null) ?: return false
+    internal suspend fun checkPin(pin: List<Int>): Boolean {
+        val savedPin = getPreferences().data.map { it.component1() }.firstOrNull() ?: return false
         return savedPin == fromIntList(pin)
     }
 
@@ -97,12 +107,12 @@ object PinManager {
     /**
      * Initializes the pin lock. Prefer calling this function inside Application class.
      *
-     * @param context
-     * Need context to initialize.
+     * @param application
+     * Need application context to initialize.
      */
     @Synchronized
-    fun initialize(context: Context) {
-        if (preferences == null) preferences = initializePreferences(context)
+    fun initialize(application: Application) {
+        if (dataStore == null) dataStore = initializePreferences(application)
     }
 
     /**
@@ -110,15 +120,17 @@ object PinManager {
      *
      * @return true if there is already saved pin, false if there is no saved pin.
      */
-    fun pinExists(): Boolean {
-        return getPreferences().contains(PIN_LOCK)
-    }
+    fun pinExists(): Flow<Boolean> = getPreferences().data.map { !it.component1().isNullOrEmpty() }
 
     /**
      * Clears the saved pin. By calling this function, you can clear the saved pin so that user can create a new pin without remembering
      * the saved pin.
      */
-    fun clearPin() {
-        getPreferences().edit().remove(PIN_LOCK).apply()
+    suspend fun clearPin() {
+        getPreferences().updateData {
+            PinPreferences(
+                pin = null
+            )
+        }
     }
 }
